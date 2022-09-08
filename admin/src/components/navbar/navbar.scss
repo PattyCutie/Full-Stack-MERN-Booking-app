@@ -1,0 +1,72 @@
+.navbar {
+    display: flex;
+    height: 50px;
+    align-items: center;
+    font-size: 14px;
+    color: #555;
+    border-bottom: 0.5px solid rgb(231, 228, 228);
+
+    .wrapper {
+        width: 100%;
+        display: flex;
+        padding: 20px;
+        align-items: center;
+        justify-content: space-between;
+
+        .search {
+            display: flex;
+            align-items: center;
+            border: 0.5px solid lightgrey;
+            padding: 3px;
+
+            input {
+                border: none;
+                outline: none;
+                background-color: transparent;
+
+                &::placeholder {
+                    font-size: 12px;
+                }
+            }
+        }
+
+        .items {
+            display: flex;
+            align-items: center;
+
+            .item {
+                position: relative;
+                display: flex;
+                align-items: center;
+                margin-right: 20px;
+
+                .icon {
+                    font-size: 20px;
+                }
+
+                .avatar {
+                    width: 30px;
+                    height: 30px;
+                    border-radius: 50%;
+                }
+
+                .counter {
+                    width: 15px;
+                    height: 15px;
+                    background-color: red;
+                    border-radius: 50%;
+                    color: #fff;
+                    display: flex;
+                    justify-content: center;
+                    font-size: 10px;
+                    font-weight: bold;
+                    /*always set parent element position to relative*/
+                    position: absolute;
+                    top: -5px;
+                    right: -5px;
+                }
+            }
+        }
+    }
+
+}
