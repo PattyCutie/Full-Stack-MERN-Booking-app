@@ -4,13 +4,18 @@
     max-width: 1024px;
     justify-content: space-between;
     gap: 20px;
+    
 }
 
 .fppItem {
+    border-radius: 20px;
+    border: 1px solid #f5f5f5;
     display: flex;
     flex: 1;
     gap: 10px;
+    border-radius: 20px;
     flex-direction: column;
+    overflow: hidden;
 }
 
 .fppImg {
@@ -22,10 +27,18 @@
 .fppName {
     color: #333;
     font-weight: bold;
+    padding-left: 10px;    
+}
+
+.fppCity {
+    padding-left: 10px;
 }
 
 .fppPrice {
     font-weight: 500;
+    padding-left: 10px;
+    padding-bottom: 5px;
+
 }
 
 .fppRating > button {

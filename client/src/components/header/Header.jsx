@@ -16,12 +16,16 @@ import "react-date-range/dist/styles.css"; // main style file
 import "react-date-range/dist/theme/default.css"; // theme css file
 import { format } from "date-fns";
 import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { SearchContext } from '../../context/SearchContext';
+import { AuthContext } from "../../context/AuthContext";
+
 
 function Header({ type }) {
   const navigate = useNavigate()
   const [destination, setDestination] = useState(""); // destination search
   const [openDate, setOpenDate] = useState(false); //calendar range
-  const [date, setDate] = useState([
+  const [dates, setDates] = useState([
     {
       startDate: new Date(),
       endDate: new Date(),
@@ -29,12 +33,16 @@ function Header({ type }) {
     },
   ]);
 
+//Options persons and room
   const [openOptions, setOpenOptions] = useState(false);
   const [options, setOptions] = useState({
     adult: 1,
     children: 0,
     room: 1,
-  }); //Options persons and room
+  }); 
+
+  const { user } = useContext(AuthContext);
+
 
   const handleCounterOption = (name, operation) => {
     setOptions((prev) => {
@@ -45,9 +53,19 @@ function Header({ type }) {
     });
   };
 
+//Search context
+const {dispatch} = useContext(SearchContext)
+
   const handleDestinationSearch = () => {
-    navigate('/hotels', {state: {destination, date, options}})
+    dispatch({ 
+      type: "NEW_SEARCH", 
+      payload:  {destination, dates, options},
+    })
+    navigate('/hotels', {
+      state: {destination, dates, options}
+    })
   }
+// Search context
 
   return (
     <div className="header">
@@ -78,12 +96,12 @@ function Header({ type }) {
 {/* choose some components for list page */}
         { type !== "list" &&
           <>
-        <h1 className="headerTitle">Find your next Destination</h1>
+        <h1 className="headerTitle">Find your next destination</h1>
         <p className="headerDescription">
           Search flights, hotels, places plus instant discount 10% and much
           more...
         </p>
-        <button className="headerButton">Sign in / Register</button>
+       {!user && <button className="headerButton">Sign in / Register</button>}
 
         <div className="headerSearch">
           <div className="headerSearchItem">
@@ -95,7 +113,7 @@ function Header({ type }) {
               type="text"
               placeholder="Find your destination"
               className="headerSearchInput"
-              onChange={e=>setDestination(e.target.value)}
+              onChange={ e => setDestination(e.target.value)}
             />
           </div>
 
@@ -109,8 +127,8 @@ function Header({ type }) {
               onClick={() => setOpenDate(!openDate)}
               className="headerSearchText"
             >
-              {`${format(date[0].startDate, "MM/dd/yyyy")} to ${format(
-                date[0].startDate,
+              {`${format(dates[0].startDate, "MM/dd/yyyy")} to ${format(
+                dates[0].endDate,
                 "MM/dd/yyyy"
               )}`}
             </span>
@@ -118,9 +136,9 @@ function Header({ type }) {
               <DateRange
                 minDate={new Date()}
                 editableDateInputs={true}
-                onChange={(item) => setDate([item.selection])}
+                onChange={(item) => setDates([item.selection])}
                 moveRangeOnFirstSelection={false}
-                ranges={date}
+                ranges={dates}
                 className="headerCalendarDateRange"
               />
             )}
@@ -129,7 +147,12 @@ function Header({ type }) {
 
           <div className="headerSearchItem">
             <FontAwesomeIcon icon={faPerson} className="headerSearchIcon" />
-            <span onClick={() => setOpenOptions(!openOptions)} className="headerSearchText">{`${options.adult} adult ∙ ${options.children} children ∙ ${options.room} room`}</span>
+            <span 
+            onClick={() => setOpenOptions(!openOptions)} 
+            className="headerSearchText">{`${options.adult} 
+            adult ∙ ${options.children} 
+            children ∙ ${options.room} 
+            room`}</span>
             {openOptions && <div className="options">
               <div className="optionItem">
                 <span className="optionText">Adult</span>

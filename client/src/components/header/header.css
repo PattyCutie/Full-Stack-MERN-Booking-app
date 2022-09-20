@@ -1,3 +1,4 @@
+
 .header {
     background-color: #00B1B0;
     color: #ffffff;
@@ -27,7 +28,7 @@
 .headerListItem {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 8px;
     font-size: 16px;
 }
 
@@ -38,7 +39,11 @@
 }
 
 .headerDescription {
-    margin: 20px 0px;
+    margin: 15px 0px;
+}
+
+.headerTitle {
+    text-transform: capitalize;
 }
 
 .headerButton {

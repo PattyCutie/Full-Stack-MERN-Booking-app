@@ -1,17 +1,34 @@
-import React from "react";
-import "./navbar.css"
+import React, { useContext } from "react";
+import { Link } from "react-router-dom";
+import { AuthContext } from "../../context/AuthContext";
+import "./navbar.css";
 
 function Navbar() {
+  const { user } = useContext(AuthContext);
+
   return (
-  <div className="navbar">
-    <div className="navContainer">
-        <span className="logo">Booking App</span>
-        <div className="navItem">
+    <div className="navbar">
+      <div className="navContainer">
+        <Link to="/" className="navLogoLink">
+          <span className="logo">Booking App</span>
+        </Link>
+        {user ? (
+          <>
+            <div className="navItem">
+              Hello {user.username}{" "}
+              <button className="navButton">Logout</button>
+            </div>
+          </>
+        ) : (
+          <div className="navItem">
             <button className="navButton">Register</button>
-            <button className="navButton">Login</button>
-        </div>
+            <Link to="/login">
+              <button className="navButton">Login</button>
+            </Link>
+          </div>
+        )}
+      </div>
     </div>
-  </div>
   );
 }
 
